@@ -1,6 +1,8 @@
 FROM node:16.14-alpine
 WORKDIR /app-frontend
+COPY package* ./
 RUN npm install
 COPY . .
-CMD [ "npm", "start" ]
-COPY package.json .
+EXPOSE 3000
+RUN npx tsc
+CMD ["npm", "start"]
