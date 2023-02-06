@@ -1,14 +1,14 @@
 import { Model, STRING } from 'sequelize';
 import db from '.';
 
-class Example extends Model {
+class User extends Model {
   username!: string;
   role!: string;
   email!: string;
   password!: string;
 }
 
-Example.init({
+User.init({
   username: STRING,
   role: STRING,
   email: STRING,
@@ -20,4 +20,4 @@ Example.init({
   timestamps: false,
 });
 
-export default Example;
+export default User;
