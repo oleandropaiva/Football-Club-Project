@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcryptjs';
 import Users from '../database/models/users';
 import genToken from './genToken';
 
@@ -14,6 +15,9 @@ export default class LoginService {
 
     const getUser = await this.user.findOne({ where: { email } }) as Users;
     if (!getUser) return ({ cod: 401, inf: { message: 'Incorrect email or password' } });
+
+    const passwordVerify = await bcrypt.compare(password, getUser.password);
+    if (!passwordVerify) return ({ cod: 401, inf: { message: 'Incorrect email or password' } });
 
     const token = genToken(getUser.email);
     return { cod: 200, inf: { token } };
