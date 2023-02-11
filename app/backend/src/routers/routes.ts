@@ -9,5 +9,6 @@ const teamController = new TeamController();
 routes.post('/login', loginController.login);
 routes.get('/login/validate', loginController.validateLogin);
 routes.get('/teams', teamController.team);
+routes.get('/teams/:id', teamController.teamById);
 
 export default routes;
