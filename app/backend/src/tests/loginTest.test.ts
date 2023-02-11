@@ -3,12 +3,12 @@ import * as chai from 'chai';
 import Users from '../database/models/users';
 // @ts-ignore
 import chaiHttp = require('chai-http');
+chai.use(chaiHttp);
 
 import { app } from '../app';
 
 import { Response } from 'superagent';
 
-chai.use(chaiHttp);
 
 const { expect } = chai;
 
@@ -26,7 +26,7 @@ describe('testando a rota login', () => {
   let chaiHttpResponse: Response;
 
   it('testando a rota login', async () => {
-    chaiHttpResponse = await chai.request(app).post('/login').send({ email: user.email, password: user.password });
+    chaiHttpResponse = await chai.request(app).post('/login').send({ email: user.email, password: 'secret_admin' });
     expect(chaiHttpResponse.status).to.be.equal(200);
     expect(chaiHttpResponse.body).to.be.an('object');
     expect(chaiHttpResponse.body).to.have.property('token');
