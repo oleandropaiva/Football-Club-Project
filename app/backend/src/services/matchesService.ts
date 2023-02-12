@@ -35,6 +35,12 @@ export default class MatchService {
     if (!verifyToken) {
       return { cod: 401, inf: { message: 'Token must be a valid token' } };
     }
+
+    if (match.homeTeamId === match.awayTeamId) {
+      return { cod: 422,
+        inf: { message: 'It is not possible to create a match with two equal teams' } };
+    }
+
     const newMatch = await this.matches
       .create({ ...match, inProgress: true });
 
