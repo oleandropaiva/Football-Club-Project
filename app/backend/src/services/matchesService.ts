@@ -40,4 +40,11 @@ export default class MatchService {
 
     return { cod: 201, inf: newMatch };
   };
+
+  updateMatch = async (id: string): Promise<IService> => {
+    const match = await this.matches.findByPk(id);
+    await match?.update({ inProgress: false });
+
+    return { cod: 200, inf: { message: 'Finished' } };
+  };
 }
