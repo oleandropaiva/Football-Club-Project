@@ -30,14 +30,13 @@ export default class MatchService {
     return { cod: 200, inf: allMatchesInProgress };
   };
 
-  addMatch = async ({ homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals }
-  :Matches, token: string): Promise<IService> => {
+  addMatch = async (match: Matches, token: string): Promise<IService> => {
     const verifyToken = JWT.verify(token, process.env.JWT_SECRET as string) as JWT.JwtPayload;
     if (!verifyToken) {
       return { cod: 401, inf: { message: 'Token must be a valid token' } };
     }
     const newMatch = await this.matches
-      .create({ homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals, inProgress: true });
+      .create({ ...match, inProgress: true });
 
     return { cod: 201, inf: newMatch };
   };
