@@ -39,15 +39,13 @@ export default class MatchService {
     }
 
     if (match.homeTeamId === match.awayTeamId) {
-      return { cod: 422,
-        inf: { message: 'It is not possible to create a match with two equal teams' } };
+      throw new CustomError(422, 'It is not possible to create a match with two equal teams');
     }
 
     const homeTeam = await Teams.findByPk(match.homeTeamId);
     const awayTeam = await Teams.findByPk(match.awayTeamId);
     if (!homeTeam || !awayTeam) {
-      return { cod: 404,
-        inf: { message: 'There is no team with such id!' } };
+      throw new CustomError(404, 'There is no team with such id!');
     }
 
     const newMatch = await this.matches

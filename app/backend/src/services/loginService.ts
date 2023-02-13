@@ -3,17 +3,24 @@ import * as JWT from 'jsonwebtoken';
 import Users from '../database/models/users';
 import genToken from './genToken';
 import IService from '../interfaces/interfaces';
+import CustomError from '../middlewares/error';
 
 export default class LoginService {
   private user = Users;
   login = async (email: string, password: string): Promise<IService> => {
-    if (!email || !password) return ({ cod: 400, inf: { message: 'All fields must be filled' } });
+    if (!email || !password) {
+      throw new CustomError(400, 'All fields must be filled');
+    }
 
     const getUser = await this.user.findOne({ where: { email } }) as Users;
-    if (!getUser) return ({ cod: 401, inf: { message: 'Incorrect email or password' } });
+    if (!getUser) {
+      throw new CustomError(401, 'Incorrect email or password');
+    }
 
     const passwordVerify = await bcrypt.compare(password, getUser.password);
-    if (!passwordVerify) return ({ cod: 401, inf: { message: 'Incorrect email or password' } });
+    if (!passwordVerify) {
+      throw new CustomError(401, 'Incorrect email or password');
+    }
 
     const token = genToken(getUser.email);
     return { cod: 200, inf: { token } };
