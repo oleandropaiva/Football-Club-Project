@@ -30,4 +30,10 @@ export default class MatchesController {
     const { cod, inf } = await this.matchesService.updateMatch(id);
     return res.status(cod).json(inf);
   };
+
+  updateMatchInProgress = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { cod, inf } = await this.matchesService.updateMatchInProgress(id, req.body);
+    return res.status(cod).json(inf);
+  };
 }
