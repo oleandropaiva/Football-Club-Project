@@ -2,6 +2,7 @@ import * as JWT from 'jsonwebtoken';
 import Matches from '../database/models/matches';
 import IService from '../interfaces/interfaces';
 import Teams from '../database/models/teams';
+import CustomError from '../middlewares/error';
 
 export default class MatchService {
   private matches = Matches;
@@ -31,9 +32,10 @@ export default class MatchService {
   };
 
   addMatch = async (match: Matches, token: string): Promise<IService> => {
-    const verifyToken = JWT.verify(token, process.env.JWT_SECRET as string) as JWT.JwtPayload;
-    if (!verifyToken) {
-      return { cod: 401, inf: { message: 'Token must be a valid token' } };
+    try {
+      JWT.verify(token, process.env.JWT_SECRET as string) as JWT.JwtPayload;
+    } catch (err) {
+      throw new CustomError(401, 'Token must be a valid token');
     }
 
     if (match.homeTeamId === match.awayTeamId) {
