@@ -23,5 +23,6 @@ routes.patch('/matches/:id', matchesController.updateMatchInProgress);
 
 routes.get('/leaderboard/home', leaderboardController.getLeaderboardHome);
 routes.get('/leaderboard/away', leaderboardController.getLeaderboardAway);
+routes.get('/leaderboard', leaderboardController.getLeaderboard);
 
 export default routes;
