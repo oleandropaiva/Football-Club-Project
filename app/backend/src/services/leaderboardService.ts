@@ -13,6 +13,14 @@ export default class Leaderboard {
     return { cod: 200, inf: table };
   };
 
+  getLeaderboardAway = async (): Promise<IService> => {
+    const [allMatches] = await this.matches
+      .sequelize?.query(querys.awayTeam) as [ILeaderboard[], unknown];
+
+    const table = this.tableMatches(allMatches);
+    return { cod: 200, inf: table };
+  };
+
   tableMatches = (allMatches: ILeaderboard[]) =>
     allMatches.map((e) => ({ ...e,
       efficiency: ((e.totalPoints / (e.totalGames * 3)) * 100).toFixed(2),
