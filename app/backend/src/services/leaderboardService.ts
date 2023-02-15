@@ -5,7 +5,7 @@ import querys from './query';
 export default class Leaderboard {
   private matches = Matches;
 
-  getLeaderboard = async (): Promise<IService> => {
+  getLeaderboardHome = async (): Promise<IService> => {
     const [allMatches] = await this.matches
       .sequelize?.query(querys.homeTeam) as [ILeaderboard[], unknown];
 
@@ -18,5 +18,3 @@ export default class Leaderboard {
       efficiency: ((e.totalPoints / (e.totalGames * 3)) * 100).toFixed(2),
     }));
 }
-
-// [P / (J * 3)] * 100

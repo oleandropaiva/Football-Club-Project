@@ -21,6 +21,6 @@ routes.get('/matches', matchesController.getMatches);
 routes.patch('/matches/:id/finish', matchesController.updateMatch);
 routes.patch('/matches/:id', matchesController.updateMatchInProgress);
 
-routes.get('/leaderboard/home', leaderboardController.getLeaderboard);
+routes.get('/leaderboard/home', leaderboardController.getLeaderboardHome);
 
 export default routes;
